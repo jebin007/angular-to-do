@@ -7,21 +7,20 @@ angular.module("todoListApp", [])
         console.log('An Input Changed');
     };
 
-    $scope.todos = [
+    $scope.todos = dataService.getTodos();
 
-        {"name": "clean the house"},
-        {"name": "water the dogs"},
-        {"name": "feed the lawn"},
-        {"name": "pay dem bills"},
-        {"name": "run"},
-        {"name": "swim"}
-    ]
 })
-.service('dataService', function() {
+.service('dataService', function($http) {
 
     this.helloConsole = function() {
         console.log('This is the hello console service!');
-    }
+    };
+
+    this.getTodos = $http.get('mock/todos.json')
+    .then(function(response) {
+        console.log(response.data);
+        return response.data;
+    })
 
 });
 
